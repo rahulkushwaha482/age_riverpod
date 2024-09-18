@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/provider.dart';
+
+
+import '../provider/age_validation_providers.dart';
 
 class HomePage extends ConsumerWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final dataRef = ref.watch(ageValidationProvider);
-    print(dataRef);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Verify Your age'),
@@ -24,8 +27,11 @@ class HomePage extends ConsumerWidget {
                 hintText: 'Enter your Age',
               ),
               onChanged: (value) {
-                ref
-                    .read(ageValidationProvider.notifier).checkValidation(int.parse(value));
+                if(value.isNotEmpty){
+                  ref
+                      .read(ageValidationProvider.notifier).checkValidation(int.parse(value));
+                }
+
               },
             ),
           ),
